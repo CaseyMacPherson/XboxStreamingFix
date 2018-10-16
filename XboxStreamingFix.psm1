@@ -12,7 +12,7 @@ function Stop-Services {
     foreach ($service in $servicesToDisable) {
         Add-Content -Path $stoppedServicesState -Force $service.Name
         Write-Host "Stopping Service: " $service.DisplayName
-        Stop-Service -Force -Name $service.Name
+        Stop-Service -Force -Name $service.Name -Confirm:$false
     }
 }
 
@@ -77,8 +77,8 @@ function Disable-HyperVNetworkDevices {
         Add-Content -Path $disabledDevicesState -Force $device.InstanceId
 
         #Have not figured out a way around this confirmation requirement here
-        Write-Host "Disabling " $device.FriendlyName ". Please confirm"
-        Disable-PnpDevice -InputObject $device
+        Write-Host "Disabling " $device.FriendlyName
+        Disable-PnpDevice -InputObject $device -Confirm:$false
     }
 }
 
@@ -106,7 +106,7 @@ function Enable-HyperVNetworkDevices {
             Write-Host "Enabling " $deviceInstance.FriendlyName " DeviceId: " $deviceInstance.DeviceId
 
             #This cmdlet requires confirmation from the end user. I have not found a way around in a pure powershell fashion
-            Enable-PnpDevice -InstanceId $deviceInstance.InstanceId
+            Enable-PnpDevice -InstanceId $deviceInstance.InstanceId -Confirm:$false
         } else {
             Write-Host "Device: " $deviceInstance.FriendlyName " is already enabled"
         }
