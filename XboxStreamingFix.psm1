@@ -1,11 +1,6 @@
 $stoppedServicesState = "$env:TEMP\services_disabled"
 $disabledDevicesState = "$env:TEMP\devices_disabled"
 
-if ($PSVersionTable.PSVersion.Major -ne 5) {
-    Write-Host "This script is only designed to work with Powershell Version 5"
-    exit 1;
-}
-
 function Stop-Services {
     param([Array]$ServicesToDisable)
     
